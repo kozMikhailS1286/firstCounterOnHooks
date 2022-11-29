@@ -1,24 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import'./App.css';
 
 function App() {
+
+  let[counter, setCounter] = useState(0)
+
+  const counterPlus = () => {
+    setCounter(++counter)
+    if (counter > 5) {
+      setCounter(5);
+      }
+    }
+
+  const counterReset = () => {
+    setCounter(0)
+  }
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="counter"> 
+        <h2 className={counter > 4 ? "five" : ""}> {counter} </h2>
+      </div>
+
+
+      <div> 
+        <button className={counter < 5 ? "on" : "off"} onClick={counterPlus}> inc </button>
+        <button className={counter < 1 ? "off" : "on"} onClick={counterReset}> reset </button>
+      </div>
+
     </div>
   );
 }
