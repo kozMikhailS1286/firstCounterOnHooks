@@ -12,6 +12,12 @@ function App() {
       }
     }
 
+    const counterDecr = () => {
+      if (counter !== 0) {
+        setCounter((prev)=>prev-1)
+        }
+      }
+
   const counterReset = () => {
     setCounter(0)
   }
@@ -28,6 +34,7 @@ function App() {
       <div> 
         <button className={counter < 5 ? "on" : "off"} onClick={counterPlus}> inc </button>
         <button className={counter < 1 ? "off" : "on"} onClick={counterReset}> reset </button>
+        <button className={counter === 0 ? "off" : "on"} onClick={counterDecr}> decr </button>
       </div>
 
     </div>
