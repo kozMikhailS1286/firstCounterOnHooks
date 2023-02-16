@@ -22,6 +22,14 @@ body {
   background-color: darkgray;
 }
 
+.settings {
+  background-color: mediumturquoise;
+  width: 130px;
+  height: 60px;
+  border-radius: 3px;
+  margin: 5px;
+}
+
 .App {
   text-align: center;
   border: 1px solid mediumturquoise;

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import'./App.css';
+import Settings from "./Settings";
 
 function App() {
 
@@ -35,8 +36,17 @@ function App() {
         <button className={counter < 5 ? "on" : "off"} onClick={counterPlus}> inc </button>
         <button className={counter < 1 ? "off" : "on"} onClick={counterReset}> reset </button>
         <button className={counter === 0 ? "off" : "on"} onClick={counterDecr}> decr </button>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
       </div>
-
+      <div className="settings">
+        <Settings />
+      </div>
     </div>
   );
 }
