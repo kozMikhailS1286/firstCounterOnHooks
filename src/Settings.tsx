@@ -6,28 +6,33 @@ import'./App.css';
 
 function Settings() {
 
-    const [value, setValue] = useState<string>("")
+    // Кладет в localStorage:
+    const [valueMax, setValueMax] = useState<string>(JSON.parse(localStorage.getItem("MaxSettings") || '0'))
+    const [valueMin, setValueMin] = useState<string>(JSON.parse(localStorage.getItem("MinSettings") || '0'))
 
     const onChangeMax = (e: ChangeEvent<HTMLInputElement>) => {
-        setValue(e.currentTarget.value)
-    }
-
-    const onChangeMin = (e: ChangeEvent<HTMLInputElement>) => {
-        setValue(e.currentTarget.value)
+        setValueMax(e.currentTarget.value)
     }
     const setToLocalStorageMax = () => {
-        localStorage.setItem("MaxSettings", value.toString())
+        localStorage.setItem("MaxSettings", valueMax.toString())
+    }
+    const onChangeMin = (e: ChangeEvent<HTMLInputElement>) => {
+        setValueMin(e.currentTarget.value)
+    }
+    const setToLocalStorageMin = () => {
+        localStorage.setItem("MinSettings", valueMin.toString())
     }
 
-    const setToLocalStorageMin = () => {
-        localStorage.setItem("MinSettings", value.toString())
-    }
+
+    console.log(valueMax)
+    console.log(valueMin)
+
 
     return (
         <div className="Settings">
-            <p> max value: </p> <input onChange={onChangeMax} type="number" id={"max"} />
+            <p> max value: </p> <input onChange={onChangeMax} type="number" value={valueMax}/>
             <button onClick={setToLocalStorageMax}> set max </button>
-            <p> min value: </p> <input onChange={onChangeMin} type="number" id={"min"}/>
+            <p> min value: </p> <input onChange={onChangeMin} type="number"  value={valueMin}/>
             <button onClick={setToLocalStorageMin}> set min </button>
         </div>
     )
