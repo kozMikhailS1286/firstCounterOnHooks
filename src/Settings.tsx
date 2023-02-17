@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import'./App.css';
 
 
@@ -7,33 +7,30 @@ import'./App.css';
 function Settings() {
 
     // Кладет в localStorage:
-    const [valueMax, setValueMax] = useState<string>(JSON.parse(localStorage.getItem("MaxSettings") || '0'))
-    const [valueMin, setValueMin] = useState<string>(JSON.parse(localStorage.getItem("MinSettings") || '0'))
+    const [maxValue, setMaxValue] = useState<string>(JSON.parse(localStorage.getItem("MaxSettings") || '0'))
+    const [startValue, setStartValue] = useState<string>(JSON.parse(localStorage.getItem("MinSettings") || '0'))
 
-    const onChangeMax = (e: ChangeEvent<HTMLInputElement>) => {
-        setValueMax(e.currentTarget.value)
+    const onChangeMaxValue = (e: ChangeEvent<HTMLInputElement>) => {
+        setMaxValue(e.currentTarget.value)
     }
-    const setToLocalStorageMax = () => {
-        localStorage.setItem("MaxSettings", valueMax.toString())
-    }
-    const onChangeMin = (e: ChangeEvent<HTMLInputElement>) => {
-        setValueMin(e.currentTarget.value)
-    }
-    const setToLocalStorageMin = () => {
-        localStorage.setItem("MinSettings", valueMin.toString())
-    }
+    useEffect(() => {
+        localStorage.setItem("MaxSettings", maxValue.toString())
+    }, [maxValue])
 
 
-    console.log(valueMax)
-    console.log(valueMin)
-
+    const onChangeStartValue = (e: ChangeEvent<HTMLInputElement>) => {
+        setStartValue(e.currentTarget.value)
+    }
+    useEffect(() => {
+        localStorage.setItem("MinSettings", startValue.toString())
+    }, [startValue])
 
     return (
         <div className="Settings">
-            <p> max value: </p> <input onChange={onChangeMax} type="number" value={valueMax}/>
-            <button onClick={setToLocalStorageMax}> set max </button>
-            <p> min value: </p> <input onChange={onChangeMin} type="number"  value={valueMin}/>
-            <button onClick={setToLocalStorageMin}> set min </button>
+            <p> max value: </p> <input onChange={onChangeMaxValue} type="number" value={maxValue}/>
+            <p> start value: </p> <input onChange={onChangeStartValue} type="number"  value={startValue}/>
+
+            <button> set </button>
         </div>
     )
 }
