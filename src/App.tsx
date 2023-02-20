@@ -33,8 +33,8 @@ function App() {
 
     const counterIncr = () => {
         setCounter(++counter)
-        if (counter > 5) {
-            setCounter(5);
+        if (counter > JSON.parse(maxValue)) {
+            setCounter(JSON.parse(maxValue));
         }
     }
 
@@ -43,17 +43,28 @@ function App() {
     }
     // Выше все относится к Counter
 
+
+
+    // Ниже все для обмена инофмацией между компонентами.
+    const setSettings = () => {
+        setCounter(JSON.parse(startValue))
+    }
+    // Выше все для обмена инофмацией между компонентами.
+
   return (
     <div className="App">
         <Settings    maxValue={maxValue}
                      startValue={startValue}
                      onChangeMaxValue={onChangeMaxValue}
                      onChangeStartValue={onChangeStartValue}
+                     setSettings={setSettings}
+                     counter={counter}
 
         />
         <Counter     counter={counter}
                      counterIncr={counterIncr}
                      counterReset={counterReset}
+                     maxValue={JSON.parse(maxValue)}
         />
     </div>
   );
