@@ -6,12 +6,17 @@ import Counter from "./Counter"
 function App() {
 
     // Ниже все относится к Settings
-    // Кладет в localStorage:
     const [maxValue, setMaxValue] = useState<string>(JSON.parse(localStorage.getItem("MaxSettings") || '0'))
     const [startValue, setStartValue] = useState<string>(JSON.parse(localStorage.getItem("MinSettings") || '0'))
 
+
     const onChangeMaxValue = (e: ChangeEvent<HTMLInputElement>) => {
+        setError('')
+        const value = +e.currentTarget.value
         setMaxValue(e.currentTarget.value)
+        if(value < 0 || value <= JSON.parse(startValue)) {
+            setError('Incorrect value!')
+        }
     }
     useEffect(() => {
         localStorage.setItem("MaxSettings", maxValue.toString())
@@ -19,7 +24,12 @@ function App() {
 
 
     const onChangeStartValue = (e: ChangeEvent<HTMLInputElement>) => {
+        setError('')
+        const value = +e.currentTarget.value
         setStartValue(e.currentTarget.value)
+        if(value < 0 || value >= JSON.parse(maxValue)) {
+            setError('Incorrect value!')
+        }
     }
     useEffect(() => {
         localStorage.setItem("MinSettings", startValue.toString())
@@ -49,6 +59,8 @@ function App() {
     const setSettings = () => {
         setCounter(JSON.parse(startValue))
     }
+
+    const [error, setError] = useState<string>('')
     // Выше все для обмена инофмацией между компонентами.
 
   return (
@@ -59,12 +71,14 @@ function App() {
                      onChangeStartValue={onChangeStartValue}
                      setSettings={setSettings}
                      counter={counter}
+                     error={error}
 
         />
         <Counter     counter={counter}
                      counterIncr={counterIncr}
                      counterReset={counterReset}
                      maxValue={JSON.parse(maxValue)}
+                     error={error}
         />
     </div>
   );
