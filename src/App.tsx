@@ -16,6 +16,7 @@ function App() {
         setMaxValue(e.currentTarget.value)
         if(value < 0 || value <= JSON.parse(startValue)) {
             setError('Incorrect value!')
+            serErrorIncr(errorIncr)
         }
     }
     useEffect(() => {
@@ -29,6 +30,7 @@ function App() {
         setStartValue(e.currentTarget.value)
         if(value < 0 || value >= JSON.parse(maxValue)) {
             setError('Incorrect value!')
+            serErrorIncr(errorIncr)
         }
     }
     useEffect(() => {
@@ -45,11 +47,13 @@ function App() {
         setCounter(++counter)
         if (counter > JSON.parse(maxValue)) {
             setCounter(JSON.parse(maxValue));
+                serErrorIncr(!errorIncr)
         }
     }
 
     const counterReset = () => {
-        setCounter(0)
+        setCounter(JSON.parse(startValue))
+        serErrorIncr(!serErrorIncr)
     }
     // Выше все относится к Counter
 
@@ -61,6 +65,7 @@ function App() {
     }
 
     const [error, setError] = useState<string>('')
+    const [errorIncr, serErrorIncr] = useState(false)
     // Выше все для обмена инофмацией между компонентами.
 
   return (
@@ -79,6 +84,7 @@ function App() {
                      counterReset={counterReset}
                      maxValue={JSON.parse(maxValue)}
                      error={error}
+                     errorIncr={errorIncr}
         />
     </div>
   );

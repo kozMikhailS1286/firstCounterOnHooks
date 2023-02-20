@@ -8,6 +8,7 @@ type CounterType = {
     counterReset: () => void
     maxValue: number
     error: string
+    errorIncr: boolean
 }
 function Counter (props: CounterType) {
 
@@ -21,8 +22,16 @@ return (
             </h2>
         </div>
         <div>
-            <button className={props.counter < props.maxValue ? "on" : "off"} onClick={props.counterIncr}> inc </button>
-            <button className={props.counter < 1 ? "off" : "on"} onClick={props.counterReset}> reset </button>
+            <button className={props.counter < props.maxValue ? "on" : "off"}
+                    onClick={props.counterIncr}
+                    disabled={!!props.errorIncr}>
+                inc
+            </button>
+            <button className={props.counter < 1 ? "off" : "on"}
+                    onClick={props.counterReset}
+                    disabled={!!props.error}>
+                reset
+            </button>
         </div>
     </div>
 )
