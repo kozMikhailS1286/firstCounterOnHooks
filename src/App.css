@@ -22,22 +22,9 @@ body {
   background-color: darkgray;
 }
 
-.settings {
-  background-color: mediumturquoise;
-  width: 130px;
-  height: 60px;
-  border-radius: 3px;
-  margin: 5px;
-}
 
-.App {
-  text-align: center;
-  border: 1px solid mediumturquoise;
-  width: 140px;
-  height: 140px;
-  margin: 10px;
-  border-radius: 3px;
-}
+
+
 
 .App-logo {
   height: 40vmin;

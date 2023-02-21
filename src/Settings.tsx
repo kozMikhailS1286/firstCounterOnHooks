@@ -1,11 +1,12 @@
 import React, {ChangeEvent} from "react";
-import'./App.css';
+import './App.css';
+import s from "./App.module.css"
 
 
 type SettingsType = {
     counter: number
     maxValue: string
-    startValue: string
+    startValue: number
     onChangeMaxValue: (e: ChangeEvent<HTMLInputElement>) => void
     onChangeStartValue: (e: ChangeEvent<HTMLInputElement>) => void
     setSettings: () => void
@@ -16,20 +17,28 @@ type SettingsType = {
 
 function Settings(props: SettingsType) {
     let counter = props.counter.toString()
-    let startValue = JSON.parse(props.startValue)
+    let startValue = JSON.parse(props.startValue.toString())
 
 
     return (
-        <div className="Settings">
-            <p> max value: </p> <input onChange={props.onChangeMaxValue} type="number" value={props.maxValue}/>
+        <div className={s.settings}>
+
+            <p> max value: </p> <input  onChange={props.onChangeMaxValue}
+                                        type="number"
+                                        value={props.maxValue}
+        />
             <p> start value: </p> <input
                                         className={startValue < 0 ? "maxValue" : " "}
                                         onChange={props.onChangeStartValue}
                                         type="number"
                                         value={props.startValue}
         />
-
-            <button disabled={!!props.error} className={counter < props.maxValue ? "on" : "off"} onClick={props.setSettings}> set </button>
+        <br/>
+            <button disabled={!!props.error || props.startValue < 0}
+                    className={counter < props.maxValue + 1 ? "on" : "off"}
+                    onClick={props.setSettings}>
+                set
+            </button>
         </div>
     )
 }

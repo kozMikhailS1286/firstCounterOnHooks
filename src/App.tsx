@@ -5,26 +5,24 @@ import Counter from "./Counter"
 
 function App() {
 
-    // Ниже все относится к Settings
     const [maxValue, setMaxValue] = useState<string>(JSON.parse(localStorage.getItem("MaxSettings") || '0'))
     const [startValue, setStartValue] = useState<string>(JSON.parse(localStorage.getItem("MinSettings") || '0'))
+    const [error, setError] = useState<string>('')
+    const [errorIncr, serErrorIncr] = useState(false)
+    const [settingsInit, setSettingsInit] = useState(false)
+    let[counter, setCounter] = useState(0)
 
 
-    const onChangeMaxValue = (e: ChangeEvent<HTMLInputElement>) => {
-        setError('')
-        const value = +e.currentTarget.value
-        setMaxValue(e.currentTarget.value)
-        if(value < 0 || value <= JSON.parse(startValue)) {
-            setError('Incorrect value!')
-            serErrorIncr(errorIncr)
-        }
-    }
     useEffect(() => {
         localStorage.setItem("MaxSettings", maxValue.toString())
     }, [maxValue])
 
+    useEffect(() => {
+        localStorage.setItem("MinSettings", startValue.toString())
+    }, [startValue])
 
     const onChangeStartValue = (e: ChangeEvent<HTMLInputElement>) => {
+        setSettingsInit(false)
         setError('')
         const value = +e.currentTarget.value
         setStartValue(e.currentTarget.value)
@@ -33,56 +31,54 @@ function App() {
             serErrorIncr(errorIncr)
         }
     }
-    useEffect(() => {
-        localStorage.setItem("MinSettings", startValue.toString())
-    }, [startValue])
-    // Выше все относится к Settings
 
-
-
-    // Ниже все относится к Counter
-    let[counter, setCounter] = useState(0)
+    const onChangeMaxValue = (e: ChangeEvent<HTMLInputElement>) => {
+        setSettingsInit(false)
+        setError('')
+        const value = +e.currentTarget.value
+        setMaxValue(e.currentTarget.value)
+        if(value < 0 || value <= JSON.parse(startValue)) {
+            setError('Incorrect value!')
+            serErrorIncr(errorIncr)
+        }
+    }
 
     const counterIncr = () => {
-        setCounter(++counter)
-        if (counter > JSON.parse(maxValue)) {
+        if (counter === JSON.parse(maxValue)) {
             setCounter(JSON.parse(maxValue));
-                serErrorIncr(!errorIncr)
+            serErrorIncr(true)
+            return
         }
+        setCounter(counter + 1)
     }
 
     const counterReset = () => {
         setCounter(JSON.parse(startValue))
         serErrorIncr(!serErrorIncr)
     }
-    // Выше все относится к Counter
 
-
-
-    // Ниже все для обмена инофмацией между компонентами.
     const setSettings = () => {
+        setSettingsInit(true)
         setCounter(JSON.parse(startValue))
     }
 
-    const [error, setError] = useState<string>('')
-    const [errorIncr, serErrorIncr] = useState(false)
-    // Выше все для обмена инофмацией между компонентами.
 
   return (
     <div className="App">
         <Settings    maxValue={maxValue}
-                     startValue={startValue}
                      onChangeMaxValue={onChangeMaxValue}
                      onChangeStartValue={onChangeStartValue}
                      setSettings={setSettings}
                      counter={counter}
                      error={error}
-
+                     startValue={JSON.parse(startValue)}
         />
         <Counter     counter={counter}
+                     isSettingsInit={settingsInit}
                      counterIncr={counterIncr}
                      counterReset={counterReset}
                      maxValue={JSON.parse(maxValue)}
+                     startValue={JSON.parse(startValue)}
                      error={error}
                      errorIncr={errorIncr}
         />
