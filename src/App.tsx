@@ -37,7 +37,7 @@ function App() {
         setError('')
         const value = +e.currentTarget.value
         setMaxValue(e.currentTarget.value)
-        if(value < 0 || value <= JSON.parse(startValue)) {
+        if(value < 0 || value <= JSON.parse(startValue) || JSON.parse(startValue) < 0 && JSON.parse(maxValue) >= -1) {
             setError('Incorrect value!')
             serErrorIncr(errorIncr)
         }
