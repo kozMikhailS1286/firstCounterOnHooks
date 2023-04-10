@@ -7,7 +7,6 @@ type CounterType = {
     counter: number
     counterIncr: () => void
     counterReset: () => void
-
     isSettingsInit : boolean
     maxValue: number
     startValue: number
@@ -21,7 +20,7 @@ function Counter (props: CounterType) {
 
     if (props.error) {
         counterStatus = props.error
-    }else {
+    } else {
         if (!props.isSettingsInit) {
             counterStatus = 'please press set to continue'
         }

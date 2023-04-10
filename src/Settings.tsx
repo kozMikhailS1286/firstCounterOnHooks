@@ -5,7 +5,7 @@ import s from "./App.module.css"
 
 type SettingsType = {
     counter: number
-    maxValue: string
+    maxValue: number
     startValue: number
     onChangeMaxValue: (e: ChangeEvent<HTMLInputElement>) => void
     onChangeStartValue: (e: ChangeEvent<HTMLInputElement>) => void
@@ -16,8 +16,8 @@ type SettingsType = {
 
 
 function Settings(props: SettingsType) {
-    let counter = props.counter.toString()
-    let startValue = JSON.parse(props.startValue.toString())
+    let counter = props.counter
+    let startValue = props.startValue
 
 
     return (
